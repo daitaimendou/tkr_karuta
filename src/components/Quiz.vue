@@ -47,7 +47,20 @@ export default {
         },
         get_random_playlist: function () {
             console.log("get_random_playlist")
-            console.log(this.all_videos)
+            // console.log(this.all_videos)
+            console.log(this.choose_at_random(this.all_videos, 10))
+        },
+        choose_at_random: function(arrayData, count) {
+            // countが設定されていない場合は1にする
+            count = count || 1;
+            var result = [];
+            for (var i = 0; i < count; i++) {
+                var arrayIndex = Math.floor(Math.random() * arrayData.length);
+                result[i] = arrayData[arrayIndex];
+                // 1回選択された値は削除して再度選ばれないようにする
+                arrayData.splice(arrayIndex, 1);
+            }
+            return result;
         }
     }
 }
