@@ -4,8 +4,10 @@ import axios from 'axios'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import VueYoutube from 'vue-youtube'
 
 Vue.use(BootstrapVue)
+Vue.use(VueYoutube)
 
 Vue.config.productionTip = false
 
