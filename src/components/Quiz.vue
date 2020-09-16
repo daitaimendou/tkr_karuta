@@ -63,6 +63,9 @@ export default {
             count = count || 1;
             var result = [];
             for (var i = 0; i < count; i++) {
+                if (arrayData.length == 0){
+                    break;
+                }
                 var arrayIndex = Math.floor(Math.random() * arrayData.length);
                 result[i] = arrayData[arrayIndex];
                 // 1回選択された値は削除して再度選ばれないようにする
