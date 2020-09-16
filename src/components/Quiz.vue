@@ -3,6 +3,12 @@
     <YoutubePlayer/>
     <button v-on:click="get_random_playlist">プレイリストを取得</button>
     <div>{{playlist_result}}</div>
+    <div v-for="(value, key) in this.choice_videos" :key="key">
+        <div>
+            videoId:{{value['videoId']}}<br>
+            title:{{value['title']}}<br>
+        </div>
+    </div>
   </div>
 </template>
 
@@ -17,6 +23,7 @@ export default {
       return {
           playlist_result: 'first',
           all_videos: '',
+          choice_videos: '',
       }
     },
     created() {
@@ -48,7 +55,8 @@ export default {
         get_random_playlist: function () {
             console.log("get_random_playlist")
             // console.log(this.all_videos)
-            console.log(this.choose_at_random(this.all_videos, 10))
+            // console.log(this.choose_at_random(this.all_videos, 10))
+            this.choice_videos = this.choose_at_random(this.all_videos, 10)
         },
         choose_at_random: function(arrayData, count) {
             // countが設定されていない場合は1にする
