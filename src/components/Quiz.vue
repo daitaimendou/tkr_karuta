@@ -15,25 +15,39 @@ export default {
     },
     data() {
       return {
-          playlist_result: 'first'
+          playlist_result: 'first',
+          all_videos: '',
       }
     },
+    created() {
+        this.get_all_videos()
+    },
     methods: {
-        get_random_playlist: function () {
-            this.playlist_result = 'hugahuga'
-            var api_url = 'https://www.googleapis.com/youtube/v3/playlistItems'
+        get_all_videos: function() {
+            var api_url = 'https://www.googleapis.com/youtube/v3/search'
             this.$axios
                 .get(api_url, {
                     params: {
-                        part: 'id,snippet',
-                        playlistId: 'PLwL8OTDdmtk1CpllAwXsRx1CO8eIk_fcI',
-                        maxResults: 3,
+                        part: 'snippet',
+                        type: 'video',
+                        channelId: 'UClSsb_e0HDQ-w7XuwNPgGqQ',
+                        maxResults: 50,
                         key: 'AIzaSyDFYvSWSlfrDeS-92coInYlUHpgPqbTSmY'
                     }
                 }).then(response => {
                     console.log(response);
-                    this.playlist_result = response
+                    this.all_videos = response['data']['items'].map(function(item){
+                        return {
+                            'videoId': item['id']['videoId'],
+                            'title': item['snippet']['title'],
+                            'image_url': item['snippet']['thumbnails']['high']['url'],
+                        }
+                    });
                 })
+        },
+        get_random_playlist: function () {
+            console.log("get_random_playlist")
+            console.log(this.all_videos)
         }
     }
 }
