@@ -1,6 +1,6 @@
 <template>
     <div class="youtube_player">
-        <youtube :video-id="videoId" ref="youtube"/>
+        <youtube class="d-none" :video-id="videoId" ref="youtube"/>
         <button class="btn btn-primary" @click="playVideo">play</button>
         <button class="btn btn-primary" @click="stopVideo">stop</button>
     </div>
