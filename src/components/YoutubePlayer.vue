@@ -10,14 +10,15 @@
 export default {
     data() {
         return {
-            videoId: 'M7lc1UVf-VE'
+            videoId: 'Xmrue0acU3M'
         }
     },
     methods: {
-        playVideo() {
+        playVideo: function() {
             this.player.playVideo()
+            setTimeout(this.stopVideo, 15000);
         },
-        stopVideo() {
+        stopVideo: function() {
             this.player.stopVideo()
         },
     },
