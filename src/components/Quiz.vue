@@ -2,7 +2,6 @@
   <div class="quiz">
     <YoutubePlayer/>
     <button v-on:click="get_random_playlist">プレイリストを取得</button>
-    <div>{{this.playlist_result}}</div>
     <div v-for="(value, key) in this.choice_videos" :key="key">
         <div>
             videoId:{{value['videoId']}}<br>
@@ -22,7 +21,6 @@ export default {
     },
     data() {
       return {
-          playlist_result: 'first',
           all_videos: all_videos,
           choice_videos: '',
       }
