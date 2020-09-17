@@ -2,7 +2,7 @@
   <div class="quiz">
     <YoutubePlayer/>
     <button v-on:click="get_random_playlist">プレイリストを取得</button>
-    <div>{{playlist_result}}</div>
+    <div>{{this.playlist_result}}</div>
     <div v-for="(value, key) in this.choice_videos" :key="key">
         <div>
             videoId:{{value['videoId']}}<br>
@@ -14,6 +14,7 @@
 
 <script>
 import YoutubePlayer from './YoutubePlayer.vue'
+import all_videos from '../assets/all_videos.json'
 
 export default {
     components: {
@@ -22,40 +23,37 @@ export default {
     data() {
       return {
           playlist_result: 'first',
-          all_videos: '',
+          all_videos: all_videos,
           choice_videos: '',
       }
     },
-    created() {
-        this.get_all_videos()
-    },
     methods: {
         get_all_videos: function() {
-            var api_url = 'https://www.googleapis.com/youtube/v3/search'
-            this.$axios
-                .get(api_url, {
-                    params: {
-                        part: 'snippet',
-                        type: 'video',
-                        channelId: 'UClSsb_e0HDQ-w7XuwNPgGqQ',
-                        maxResults: 50,
-                        key: 'AIzaSyDFYvSWSlfrDeS-92coInYlUHpgPqbTSmY'
-                    }
-                }).then(response => {
-                    console.log(response);
-                    this.all_videos = response['data']['items'].map(function(item){
-                        return {
-                            'videoId': item['id']['videoId'],
-                            'title': item['snippet']['title'],
-                            'image_url': item['snippet']['thumbnails']['high']['url'],
-                        }
-                    });
-                })
+            // var api_url = 'https://www.googleapis.com/youtube/v3/search'
+            // this.$axios
+            //     .get(api_url, {
+            //         params: {
+            //             part: 'snippet',
+            //             type: 'video',
+            //             channelId: 'UClSsb_e0HDQ-w7XuwNPgGqQ',
+            //             maxResults: 50,
+            //             // key: 'AIzaSyBS958fwoujmju4U9xhrFlV08X3zDLoIf4'
+            //             key: 'AIzaSyCARTQFBV1AvSGvzd24uYyiekkWYzO28UU',
+            //         }
+            //     }).then(response => {
+            //         console.log(response);
+            //         this.all_videos = response['data']['items'].map(function(item){
+            //             return {
+            //                 'videoId': item['id']['videoId'],
+            //                 'title': item['snippet']['title'],
+            //                 'image_url': item['snippet']['thumbnails']['high']['url'],
+            //             }
+            //         });
+            //     })
+            this.all_videos = all_videos
         },
         get_random_playlist: function () {
             console.log("get_random_playlist")
-            // console.log(this.all_videos)
-            // console.log(this.choose_at_random(this.all_videos, 10))
             this.choice_videos = this.choose_at_random(this.all_videos, 10)
         },
         choose_at_random: function(arrayData, count) {
