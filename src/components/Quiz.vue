@@ -1,28 +1,28 @@
 <template>
   <div class="quiz">
     <YoutubePlayer/>
-    <button v-on:click="get_random_playlist">プレイリストを取得</button>
+    <button class="btn btn-primary" v-on:click="get_random_playlist">プレイリストを取得</button>
     <div v-for="(value, key) in this.choice_videos" :key="key">
-        <div>
-            videoId:{{value['videoId']}}<br>
-            title:{{value['title']}}<br>
-        </div>
+        <ChoiceCard :title="value['title']" :image_url="value['image_url']" :videoId="value['videoId']"/>
     </div>
   </div>
 </template>
 
 <script>
 import YoutubePlayer from './YoutubePlayer.vue'
+import ChoiceCard from './ChoiceCard.vue'
 import all_videos from '../assets/all_videos.json'
 
 export default {
     components: {
-        YoutubePlayer
+        YoutubePlayer,
+        ChoiceCard
     },
     data() {
       return {
           all_videos: all_videos,
           choice_videos: '',
+          hoge: 'yaho'
       }
     },
     methods: {
