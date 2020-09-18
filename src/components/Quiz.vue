@@ -1,9 +1,13 @@
 <template>
   <div class="quiz">
-    <YoutubePlayer/>
-    <button class="btn btn-primary" v-on:click="get_random_playlist">プレイリストを取得</button>
-    <div v-for="(value, key) in this.choice_videos" :key="key">
-        <ChoiceCard :title="value['title']" :image_url="value['image_url']" :videoId="value['videoId']"/>
+    <div class="container">
+        <YoutubePlayer/>
+        <button class="btn btn-primary" v-on:click="get_random_playlist">プレイリストを取得</button>
+        <div class="row">
+            <div class="col col-lg-4 col-sm-6 col-12 p-1" v-for="(value, key) in this.choice_videos" :key="key">
+                <ChoiceCard :title="value['title']" :image_url="value['image_url']" :videoId="value['videoId']"/>
+            </div>
+        </div>
     </div>
   </div>
 </template>
@@ -24,6 +28,9 @@ export default {
           choice_videos: '',
           hoge: 'yaho'
       }
+    },
+    created() {
+        this.get_random_playlist()
     },
     methods: {
         get_all_videos: function() {
@@ -52,7 +59,7 @@ export default {
         },
         get_random_playlist: function () {
             console.log("get_random_playlist")
-            this.choice_videos = this.choose_at_random(this.all_videos, 10)
+            this.choice_videos = this.choose_at_random(this.all_videos, 6)
         },
         choose_at_random: function(arrayData, count) {
             // countが設定されていない場合は1にする
