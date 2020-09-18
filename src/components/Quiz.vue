@@ -4,8 +4,8 @@
         <YoutubePlayer/>
         <button class="btn btn-primary" v-on:click="get_random_playlist">プレイリストを取得</button>
         <div class="row">
-            <div class="col col-lg-4 col-sm-6 col-12 p-1" v-for="(value, key) in this.choice_videos" :key="key">
-                <ChoiceCard :title="value['title']" :image_url="value['image_url']" :videoId="value['videoId']"/>
+            <div v-for="(value, key) in this.choice_videos" :key="key" class="col col-lg-4 col-sm-6 col-12 p-1">
+                <ChoiceCard @answer="check_anser" :title="value['title']" :image_url="value['image_url']"/>
             </div>
         </div>
     </div>
@@ -60,6 +60,9 @@ export default {
         get_random_playlist: function () {
             console.log("get_random_playlist")
             this.choice_videos = this.choose_at_random(this.all_videos, 6)
+        },
+        check_anser: function(){
+            alert('hoge')
         },
         choose_at_random: function(arrayData, count) {
             // countが設定されていない場合は1にする

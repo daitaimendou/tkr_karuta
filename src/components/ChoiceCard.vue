@@ -1,5 +1,5 @@
 <template>
-    <div class="card h-100">
+    <div class="card h-100" @click="answer">
         <img class="img bd-placeholder-img card-img-top" :src="image_url">
         <div class="card-body">
             <p class="card-text">{{title}}</p>
@@ -9,9 +9,13 @@
 <script>
 export default {
     props: [
-        'videoId',
         'title',
         'image_url',
-    ]
+    ],
+    methods: {
+        answer(){
+            this.$emit('answer');
+        }
+    }
 }
 </script>
