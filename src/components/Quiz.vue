@@ -1,11 +1,12 @@
 <template>
   <div class="quiz">
-    <YoutubePlayer/>
-    <button v-on:click="get_random_playlist">プレイリストを取得</button>
-    <div v-for="(value, key) in this.choice_videos" :key="key">
-        <div>
-            videoId:{{value['videoId']}}<br>
-            title:{{value['title']}}<br>
+    <div class="container">
+        <YoutubePlayer/>
+        <button class="btn btn-primary" v-on:click="get_random_playlist">プレイリストを取得</button>
+        <div class="row">
+            <div v-for="(value, key) in this.choice_videos" :key="key" class="col col-lg-4 col-sm-6 col-12 p-1">
+                <ChoiceCard @answer="check_anser(value['videoId'])" :title="value['title']" :image_url="value['image_url']"/>
+            </div>
         </div>
     </div>
   </div>
@@ -13,17 +14,23 @@
 
 <script>
 import YoutubePlayer from './YoutubePlayer.vue'
+import ChoiceCard from './ChoiceCard.vue'
 import all_videos from '../assets/all_videos.json'
 
 export default {
     components: {
-        YoutubePlayer
+        YoutubePlayer,
+        ChoiceCard
     },
     data() {
       return {
           all_videos: all_videos,
           choice_videos: '',
+          hoge: 'yaho'
       }
+    },
+    created() {
+        this.get_random_playlist()
     },
     methods: {
         get_all_videos: function() {
@@ -51,8 +58,10 @@ export default {
             this.all_videos = all_videos
         },
         get_random_playlist: function () {
-            console.log("get_random_playlist")
-            this.choice_videos = this.choose_at_random(this.all_videos, 10)
+            this.choice_videos = this.choose_at_random(this.all_videos, 6)
+        },
+        check_anser: function(video_id){
+            alert(video_id)
         },
         choose_at_random: function(arrayData, count) {
             // countが設定されていない場合は1にする
