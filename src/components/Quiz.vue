@@ -10,7 +10,7 @@
                 </div>
             </div>
         </div>
-        <div v-if="is_display_modal">
+        <div v-if="is_display_answer_modal">
             <div class="modal" style="display: block;" >
                 <div class="modal-dialog modal-dialog-scrollable">
                     <div class="modal-content">
@@ -34,7 +34,25 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" v-on:click.self="is_display_modal=false">閉じる</button>
+                            <button type="button" class="btn btn-primary" v-on:click="show_result">結果を表示する</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-backdrop show"></div>
+        </div>
+        <div v-if="is_display_result_modal">
+            <div class="modal" style="display: block;" >
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-body text-center my-4">
+                            <div>
+                                <div class="my-3"><font size="5">{{MAX_QUIZ_NUM}}問中{{correct_answer_num}}問正解！</font><br></div>
+                                <!-- 結果をシェアする -->
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" v-on:click="get_question()">もう一回遊ぶ</button>
                         </div>
                     </div>
                 </div>
@@ -59,12 +77,14 @@ export default {
     },
     data() {
       return {
-          all_videos: all_videos,
+          MAX_QUIZ_NUM: 1,
+          all_videos: all_videos.concat(),
           choice_videos: '',
           anser_video_id: '',
           choice_video_id: '',
-          hoge: 'yaho',
-          is_display_modal: false,
+          correct_answer_num: 0,
+          is_display_answer_modal: false,
+          is_display_result_modal: false,
           is_correct_answer: false,
       }
     },
@@ -97,6 +117,9 @@ export default {
             this.all_videos = all_videos
         },
         get_question: function() {
+            this.correct_answer_num = 0;
+            this.all_videos = all_videos.concat();
+            this.is_display_result_modal = false;
             this.get_random_playlist()
             this.get_answer_video_id()
         },
@@ -107,14 +130,19 @@ export default {
             this.anser_video_id = this.choice_videos[this.choose_at_random_index(this.choice_videos)]['videoId'];
         },
         check_anser: function(choice_video_id){
-            this.is_display_modal = true
+            this.is_display_answer_modal = true
             this.choice_video_id = choice_video_id
 
             if (choice_video_id == this.anser_video_id) {
                 this.is_correct_answer = true
+                this.correct_answer_num += 1
             } else {
                 this.is_correct_answer = false
             }
+        },
+        show_result: function() {
+            this.is_display_answer_modal = false
+            this.is_display_result_modal = true
         },
         choose_at_random_list: function(arrayData, count) {
             // countが設定されていない場合は1にする
