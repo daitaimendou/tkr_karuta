@@ -16,12 +16,10 @@
                             <h4 class="modal-title">タイトルタイトル</h4>
                         </div>
                         <div class="modal-body">
-                            <p>ダイアログの中身</p>
-                            <p>ダイアログの中身</p>
-                            <p>ダイアログの中身</p>
+                            <YoutubePlayer :video_id="this.choice_videos[0]['videoId']"/>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" v-on:click.self="is_display_modal=false">フッターのボタンなど</button>
+                            <button type="button" class="btn btn-primary" v-on:click.self="is_display_modal=false">閉じる</button>
                         </div>
                     </div>
                 </div>
@@ -33,12 +31,14 @@
 </template>
 
 <script>
+import YoutubePlayer from './YoutubePlayer.vue'
 import Question from './Question.vue'
 import ChoiceCard from './ChoiceCard.vue'
 import all_videos from '../assets/all_videos.json'
 
 export default {
     components: {
+        YoutubePlayer,
         Question,
         ChoiceCard,
     },

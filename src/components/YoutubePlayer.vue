@@ -1,13 +1,15 @@
 <template>
-    <div class="youtube_player">
-        <youtube :video-id="videoId" ref="youtube"/>
+    <div>
+        <div class="youtube_player embed-responsive embed-responsive-16by9">
+            <youtube :video-id="video_id" ref="youtube" class="embed-responsive-item"/>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
     props: [
-        'videoId',
+        'video_id',
     ],
     // data() {
     // },
