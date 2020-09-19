@@ -1,22 +1,37 @@
 <template>
-  <div class="quiz">
+  <div class="quiz m-2">
     <div class="container">
-        <Question :video_id="this.choice_videos[0]['videoId']"/>
-        <button class="btn btn-primary" v-on:click="get_random_playlist">プレイリストを取得</button>
-        <div class="row">
-            <div v-for="(value, key) in this.choice_videos" :key="key" class="col col-lg-4 col-sm-6 col-12 p-1">
-                <ChoiceCard @answer="check_anser(value['videoId'])" :title="value['title']" :image_url="value['image_url']"/>
+        <Question :video_id="anser_video_id"/>
+        <div class="m-1">
+            <div class="text-center text-secondary">正解を選択してください</div>
+            <div class="row">
+                <div v-for="(value, key) in this.choice_videos" :key="key" class="col col-lg-4 col-sm-6 col-12 p-2">
+                    <ChoiceCard @answer="check_anser(value['videoId'])" :title="value['title']" :image_url="value['image_url']"/>
+                </div>
             </div>
         </div>
         <div v-if="is_display_modal">
             <div class="modal" style="display: block;" >
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-scrollable">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">タイトルタイトル</h4>
-                        </div>
                         <div class="modal-body">
-                            <YoutubePlayer :video_id="this.choice_videos[0]['videoId']"/>
+                            <div class="text-center mb-1">
+                                <div class="text-danger" v-if="is_correct_answer">
+                                    <font-awesome-icon :icon="['far', 'circle']" size="5x"/><br>
+                                    正解！
+                                </div>
+                                <div v-else class="text-info">
+                                    <font-awesome-icon :icon="['fas', 'times']" size="5x"/><br>
+                                    不正解
+                                </div>
+                            </div>
+                            正解は...
+                            <YoutubePlayer :video_id="anser_video_id"/>
+                            <div v-if="!is_correct_answer" class="mt-1">
+                                <hr>
+                                あなたの回答
+                                <YoutubePlayer :video_id="choice_video_id"/>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" v-on:click.self="is_display_modal=false">閉じる</button>
@@ -46,12 +61,15 @@ export default {
       return {
           all_videos: all_videos,
           choice_videos: '',
+          anser_video_id: '',
+          choice_video_id: '',
           hoge: 'yaho',
-          is_display_modal: false
+          is_display_modal: false,
+          is_correct_answer: false,
       }
     },
     created() {
-        this.get_random_playlist()
+        this.get_question()
     },
     methods: {
         get_all_videos: function() {
@@ -78,14 +96,27 @@ export default {
             //     })
             this.all_videos = all_videos
         },
+        get_question: function() {
+            this.get_random_playlist()
+            this.get_answer_video_id()
+        },
         get_random_playlist: function () {
-            this.choice_videos = this.choose_at_random(this.all_videos, 6)
+            this.choice_videos = this.choose_at_random_list(this.all_videos, 6)
         },
-        check_anser: function(video_id){
-            console.log(video_id)
+        get_answer_video_id: function() {
+            this.anser_video_id = this.choice_videos[this.choose_at_random_index(this.choice_videos)]['videoId'];
+        },
+        check_anser: function(choice_video_id){
             this.is_display_modal = true
+            this.choice_video_id = choice_video_id
+
+            if (choice_video_id == this.anser_video_id) {
+                this.is_correct_answer = true
+            } else {
+                this.is_correct_answer = false
+            }
         },
-        choose_at_random: function(arrayData, count) {
+        choose_at_random_list: function(arrayData, count) {
             // countが設定されていない場合は1にする
             count = count || 1;
             var result = [];
@@ -93,12 +124,15 @@ export default {
                 if (arrayData.length == 0){
                     break;
                 }
-                var arrayIndex = Math.floor(Math.random() * arrayData.length);
-                result[i] = arrayData[arrayIndex];
+                var arrayIndex = this.choose_at_random_index(arrayData)
+                result[i] = arrayData[arrayIndex]
                 // 1回選択された値は削除して再度選ばれないようにする
                 arrayData.splice(arrayIndex, 1);
             }
             return result;
+        },
+        choose_at_random_index: function(arrayData) {
+            return Math.floor(Math.random() * arrayData.length);
         }
     }
 }
