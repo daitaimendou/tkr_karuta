@@ -3,9 +3,9 @@
     <div class="container">
         <Question :video_id="anser_video_id"/>
         <div class="m-1">
-            <div class="text-center text-secondary">正解を選んでください</div>
+            <div class="text-center text-secondary">正解を選択してください</div>
             <div class="row">
-                <div v-for="(value, key) in this.choice_videos" :key="key" class="col col-lg-4 col-sm-6 col-12 p-1">
+                <div v-for="(value, key) in this.choice_videos" :key="key" class="col col-lg-4 col-sm-6 col-12 p-2">
                     <ChoiceCard @answer="check_anser(value['videoId'])" :title="value['title']" :image_url="value['image_url']"/>
                 </div>
             </div>
