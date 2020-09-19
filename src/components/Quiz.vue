@@ -12,7 +12,7 @@
         </div>
         <div v-if="is_display_modal">
             <div class="modal" style="display: block;" >
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-scrollable">
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="text-center mb-1">
@@ -27,6 +27,11 @@
                             </div>
                             正解は...
                             <YoutubePlayer :video_id="anser_video_id"/>
+                            <div v-if="!is_correct_answer" class="mt-1">
+                                <hr>
+                                あなたの回答
+                                <YoutubePlayer :video_id="choice_video_id"/>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" v-on:click.self="is_display_modal=false">閉じる</button>
@@ -57,6 +62,7 @@ export default {
           all_videos: all_videos,
           choice_videos: '',
           anser_video_id: '',
+          choice_video_id: '',
           hoge: 'yaho',
           is_display_modal: false,
           is_correct_answer: false,
@@ -101,8 +107,8 @@ export default {
             this.anser_video_id = this.choice_videos[this.choose_at_random_index(this.choice_videos)]['videoId'];
         },
         check_anser: function(choice_video_id){
-            console.log(choice_video_id)
             this.is_display_modal = true
+            this.choice_video_id = choice_video_id
 
             if (choice_video_id == this.anser_video_id) {
                 this.is_correct_answer = true

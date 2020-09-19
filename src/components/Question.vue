@@ -16,7 +16,7 @@ export default {
     methods: {
         playVideo: function() {
             this.$refs.youtube_player.playVideo();
-            setTimeout(this.$refs.youtube_player.stopVideo, 15000);
+            setTimeout(this.$refs.youtube_player.stopVideo, 20000);
         },
         stopVideo: function() {
             this.$refs.youtube_player.stopVideo();
