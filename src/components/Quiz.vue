@@ -8,6 +8,26 @@
                 <ChoiceCard @answer="check_anser(value['videoId'])" :title="value['title']" :image_url="value['image_url']"/>
             </div>
         </div>
+        <div v-if="is_display_modal">
+            <div class="modal" style="display: block;" >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">タイトルタイトル</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>ダイアログの中身</p>
+                            <p>ダイアログの中身</p>
+                            <p>ダイアログの中身</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" v-on:click.self="is_display_modal=false">フッターのボタンなど</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-backdrop show"></div>
+        </div>
     </div>
   </div>
 </template>
@@ -26,7 +46,8 @@ export default {
       return {
           all_videos: all_videos,
           choice_videos: '',
-          hoge: 'yaho'
+          hoge: 'yaho',
+          is_display_modal: false
       }
     },
     created() {
@@ -61,7 +82,8 @@ export default {
             this.choice_videos = this.choose_at_random(this.all_videos, 6)
         },
         check_anser: function(video_id){
-            alert(video_id)
+            console.log(video_id)
+            this.is_display_modal = true
         },
         choose_at_random: function(arrayData, count) {
             // countが設定されていない場合は1にする
