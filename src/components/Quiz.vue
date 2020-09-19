@@ -1,8 +1,8 @@
 <template>
   <div class="quiz">
     <div class="container">
-        <Question :video_id="this.choice_videos[0]['videoId']"/>
-        <button class="btn btn-primary" v-on:click="get_random_playlist">プレイリストを取得</button>
+        <Question :video_id="anser_video_id"/>
+        <button class="btn btn-primary" v-on:click="get_question">プレイリストを取得</button>
         <div class="row">
             <div v-for="(value, key) in this.choice_videos" :key="key" class="col col-lg-4 col-sm-6 col-12 p-1">
                 <ChoiceCard @answer="check_anser(value['videoId'])" :title="value['title']" :image_url="value['image_url']"/>
@@ -46,12 +46,13 @@ export default {
       return {
           all_videos: all_videos,
           choice_videos: '',
+          anser_video_id: '',
           hoge: 'yaho',
           is_display_modal: false
       }
     },
     created() {
-        this.get_random_playlist()
+        this.get_question()
     },
     methods: {
         get_all_videos: function() {
@@ -78,14 +79,21 @@ export default {
             //     })
             this.all_videos = all_videos
         },
+        get_question: function() {
+            this.get_random_playlist()
+            this.get_answer_video_id()
+        },
         get_random_playlist: function () {
-            this.choice_videos = this.choose_at_random(this.all_videos, 6)
+            this.choice_videos = this.choose_at_random_list(this.all_videos, 6)
+        },
+        get_answer_video_id: function() {
+            this.anser_video_id = this.choice_videos[this.choose_at_random_index(this.choice_videos)]['videoId'];
         },
         check_anser: function(video_id){
             console.log(video_id)
             this.is_display_modal = true
         },
-        choose_at_random: function(arrayData, count) {
+        choose_at_random_list: function(arrayData, count) {
             // countが設定されていない場合は1にする
             count = count || 1;
             var result = [];
@@ -93,12 +101,15 @@ export default {
                 if (arrayData.length == 0){
                     break;
                 }
-                var arrayIndex = Math.floor(Math.random() * arrayData.length);
-                result[i] = arrayData[arrayIndex];
+                var arrayIndex = this.choose_at_random_index(arrayData)
+                result[i] = arrayData[arrayIndex]
                 // 1回選択された値は削除して再度選ばれないようにする
                 arrayData.splice(arrayIndex, 1);
             }
             return result;
+        },
+        choose_at_random_index: function(arrayData) {
+            return Math.floor(Math.random() * arrayData.length);
         }
     }
 }
