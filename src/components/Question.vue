@@ -15,8 +15,9 @@ export default {
     props: ['video_id'],
     methods: {
         playVideo: function() {
+            this.$refs.youtube_player.stopVideo();
             this.$refs.youtube_player.playVideo();
-            setTimeout(this.$refs.youtube_player.stopVideo, 20000);
+            setTimeout(this.$refs.youtube_player.stopVideo, 15000);
         },
         stopVideo: function() {
             this.$refs.youtube_player.stopVideo();
