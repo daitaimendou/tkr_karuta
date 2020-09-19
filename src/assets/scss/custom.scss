@@ -20,6 +20,13 @@ div {
     }
     color: #060606;
     font-family: 'Noto Sans Japanese', sans-serif;
+    font-size: 15px;
+    h1 {
+        font-size: 20px;
+    }
+    a {
+        color: #B10824
+    }
 }
 
 @import "~bootstrap/scss/bootstrap";
