@@ -10,7 +10,7 @@
                 </div>
             </div>
         </div>
-        <div v-if="is_display_modal">
+        <div v-if="is_display_answer_modal">
             <div class="modal" style="display: block;" >
                 <div class="modal-dialog modal-dialog-scrollable">
                     <div class="modal-content">
@@ -34,7 +34,25 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" v-on:click.self="is_display_modal=false">閉じる</button>
+                            <button type="button" class="btn btn-primary" v-on:click="show_result">結果を表示する</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-backdrop show"></div>
+        </div>
+        <div v-if="is_display_result_modal">
+            <div class="modal" style="display: block;" >
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-body text-center my-4">
+                            <div>
+                                <div class="my-3"><font size="5">10問中n問正解！</font><br></div>
+                                <!-- 結果をシェアする -->
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" v-on:click.self="is_display_result_modal=false">もう一回遊ぶ</button>
                         </div>
                     </div>
                 </div>
@@ -64,7 +82,8 @@ export default {
           anser_video_id: '',
           choice_video_id: '',
           hoge: 'yaho',
-          is_display_modal: false,
+          is_display_answer_modal: false,
+          is_display_result_modal: false,
           is_correct_answer: false,
       }
     },
@@ -107,7 +126,7 @@ export default {
             this.anser_video_id = this.choice_videos[this.choose_at_random_index(this.choice_videos)]['videoId'];
         },
         check_anser: function(choice_video_id){
-            this.is_display_modal = true
+            this.is_display_answer_modal = true
             this.choice_video_id = choice_video_id
 
             if (choice_video_id == this.anser_video_id) {
@@ -115,6 +134,10 @@ export default {
             } else {
                 this.is_correct_answer = false
             }
+        },
+        show_result: function() {
+            this.is_display_answer_modal = false
+            this.is_display_result_modal = true
         },
         choose_at_random_list: function(arrayData, count) {
             // countが設定されていない場合は1にする
