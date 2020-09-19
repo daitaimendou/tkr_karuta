@@ -47,12 +47,12 @@
                     <div class="modal-content">
                         <div class="modal-body text-center my-4">
                             <div>
-                                <div class="my-3"><font size="5">10問中n問正解！</font><br></div>
+                                <div class="my-3"><font size="5">{{MAX_QUIZ_NUM}}問中n問正解！</font><br></div>
                                 <!-- 結果をシェアする -->
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" v-on:click.self="is_display_result_modal=false">もう一回遊ぶ</button>
+                            <button type="button" class="btn btn-primary" v-on:click="get_question()">もう一回遊ぶ</button>
                         </div>
                     </div>
                 </div>
@@ -77,11 +77,11 @@ export default {
     },
     data() {
       return {
+          MAX_QUIZ_NUM: 1,
           all_videos: all_videos,
           choice_videos: '',
           anser_video_id: '',
           choice_video_id: '',
-          hoge: 'yaho',
           is_display_answer_modal: false,
           is_display_result_modal: false,
           is_correct_answer: false,
@@ -116,6 +116,8 @@ export default {
             this.all_videos = all_videos
         },
         get_question: function() {
+            this.all_videos = all_videos;
+            this.is_display_result_modal = false;
             this.get_random_playlist()
             this.get_answer_video_id()
         },
