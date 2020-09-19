@@ -47,7 +47,7 @@
                     <div class="modal-content">
                         <div class="modal-body text-center my-4">
                             <div>
-                                <div class="my-3"><font size="5">{{MAX_QUIZ_NUM}}問中n問正解！</font><br></div>
+                                <div class="my-3"><font size="5">{{MAX_QUIZ_NUM}}問中{{correct_answer_num}}問正解！</font><br></div>
                                 <!-- 結果をシェアする -->
                             </div>
                         </div>
@@ -78,10 +78,11 @@ export default {
     data() {
       return {
           MAX_QUIZ_NUM: 1,
-          all_videos: all_videos,
+          all_videos: all_videos.concat(),
           choice_videos: '',
           anser_video_id: '',
           choice_video_id: '',
+          correct_answer_num: 0,
           is_display_answer_modal: false,
           is_display_result_modal: false,
           is_correct_answer: false,
@@ -116,7 +117,8 @@ export default {
             this.all_videos = all_videos
         },
         get_question: function() {
-            this.all_videos = all_videos;
+            this.correct_answer_num = 0;
+            this.all_videos = all_videos.concat();
             this.is_display_result_modal = false;
             this.get_random_playlist()
             this.get_answer_video_id()
@@ -133,6 +135,7 @@ export default {
 
             if (choice_video_id == this.anser_video_id) {
                 this.is_correct_answer = true
+                this.correct_answer_num += 1
             } else {
                 this.is_correct_answer = false
             }
