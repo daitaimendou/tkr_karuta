@@ -1,6 +1,7 @@
 <template>
   <div class="quiz m-2">
     <div class="container">
+        <div class="text-center"><font size="7">{{now_quiz_num}}</font><font size="5">/{{MAX_QUIZ_NUM}}問目</font></div>
         <Question :video_id="anser_video_id"/>
         <div class="m-1">
             <div class="text-center text-secondary">正解を選択してください</div>
@@ -34,7 +35,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" v-on:click="show_result">結果を表示する</button>
+                            <button v-if="now_quiz_num < MAX_QUIZ_NUM" type="button" class="btn btn-primary" v-on:click="get_question">次の問題</button>
+                            <button v-else type="button" class="btn btn-primary" v-on:click="show_result">結果を表示する</button>
                         </div>
                     </div>
                 </div>
@@ -52,7 +54,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" v-on:click="get_question()">もう一回遊ぶ</button>
+                            <button type="button" class="btn btn-primary" v-on:click="set_start()">もう一回遊ぶ</button>
                         </div>
                     </div>
                 </div>
@@ -77,49 +79,32 @@ export default {
     },
     data() {
       return {
-          MAX_QUIZ_NUM: 1,
+          MAX_QUIZ_NUM: 10,
           all_videos: all_videos.concat(),
           choice_videos: '',
           anser_video_id: '',
           choice_video_id: '',
           correct_answer_num: 0,
+          now_quiz_num: 0,
           is_display_answer_modal: false,
           is_display_result_modal: false,
           is_correct_answer: false,
       }
     },
     created() {
-        this.get_question()
+        this.set_start()
     },
     methods: {
-        get_all_videos: function() {
-            // var api_url = 'https://www.googleapis.com/youtube/v3/search'
-            // this.$axios
-            //     .get(api_url, {
-            //         params: {
-            //             part: 'snippet',
-            //             type: 'video',
-            //             channelId: 'UClSsb_e0HDQ-w7XuwNPgGqQ',
-            //             maxResults: 50,
-            //             // key: 'AIzaSyBS958fwoujmju4U9xhrFlV08X3zDLoIf4'
-            //             key: 'AIzaSyCARTQFBV1AvSGvzd24uYyiekkWYzO28UU',
-            //         }
-            //     }).then(response => {
-            //         console.log(response);
-            //         this.all_videos = response['data']['items'].map(function(item){
-            //             return {
-            //                 'videoId': item['id']['videoId'],
-            //                 'title': item['snippet']['title'],
-            //                 'image_url': item['snippet']['thumbnails']['high']['url'],
-            //             }
-            //         });
-            //     })
-            this.all_videos = all_videos
+        set_start: function() {
+            this.is_display_result_modal = false;
+            this.correct_answer_num = 0;
+            this.now_quiz_num = 0;
+            this.all_videos = all_videos.concat();
+            this.get_question();
         },
         get_question: function() {
-            this.correct_answer_num = 0;
-            this.all_videos = all_videos.concat();
-            this.is_display_result_modal = false;
+            this.is_display_answer_modal = false;
+            this.now_quiz_num += 1;
             this.get_random_playlist()
             this.get_answer_video_id()
         },
