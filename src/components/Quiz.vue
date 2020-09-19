@@ -1,7 +1,7 @@
 <template>
   <div class="quiz">
     <div class="container">
-        <YoutubePlayer/>
+        <Question :video_id="this.choice_videos[0]['videoId']"/>
         <button class="btn btn-primary" v-on:click="get_random_playlist">プレイリストを取得</button>
         <div class="row">
             <div v-for="(value, key) in this.choice_videos" :key="key" class="col col-lg-4 col-sm-6 col-12 p-1">
@@ -33,14 +33,14 @@
 </template>
 
 <script>
-import YoutubePlayer from './YoutubePlayer.vue'
+import Question from './Question.vue'
 import ChoiceCard from './ChoiceCard.vue'
 import all_videos from '../assets/all_videos.json'
 
 export default {
     components: {
-        YoutubePlayer,
-        ChoiceCard
+        Question,
+        ChoiceCard,
     },
     data() {
       return {
