@@ -1,9 +1,13 @@
 <template>
   <div class="quiz m-2">
     <div class="container">
+        <div v-if="now_quiz_num == 1" class="text-center p-3 bg-light mx-lg-5">
+            匿名ラジオの冒頭15秒を聞いてどの回かを当てるクイズ<br>
+            <small>※このクイズはファン作品です。公式とは一切関係ありません。</small>
+        </div>
         <div class="text-center"><font size="7">{{now_quiz_num}}</font><font size="5">/{{MAX_QUIZ_NUM}}問目</font></div>
         <Question :video_id="anser_video_id"/>
-        <div class="m-1">
+        <div class="m-1 py-3">
             <div class="text-center text-secondary">正解を選択してください</div>
             <div class="row">
                 <div v-for="(value, key) in this.choice_videos" :key="key" class="col col-lg-4 col-sm-6 col-12 p-2">
@@ -103,6 +107,7 @@ export default {
             this.get_question();
         },
         get_question: function() {
+            window.scrollTo({top: 0});
             this.is_display_answer_modal = false;
             this.now_quiz_num += 1;
             this.get_random_playlist()
