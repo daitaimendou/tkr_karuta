@@ -3,7 +3,8 @@
     <div class="container">
         <div v-if="now_quiz_num == 1" class="text-center p-3 bg-light mx-lg-5">
             匿名ラジオの冒頭15秒を聞いてどの回かを当てるクイズ<br>
-            <small>※このクイズはファン作品です。公式とは一切関係ありません。</small>
+            <small>※このクイズはファン作品です。公式とは一切関係ありません。</small><br>
+            <small>制作者 <a href="https://twitter.com/daitaimendou">@daitaimendou</a></small>
         </div>
         <div class="text-center"><font size="7">{{now_quiz_num}}</font><font size="5">/{{MAX_QUIZ_NUM}}問目</font></div>
         <Question :video_id="anser_video_id"/>
@@ -25,7 +26,7 @@
                                     <font-awesome-icon :icon="['far', 'circle']" size="5x"/><br>
                                     正解！
                                 </div>
-                                <div v-else class="text-info">
+                                <div v-else class="text-times">
                                     <font-awesome-icon :icon="['fas', 'times']" size="5x"/><br>
                                     不正解
                                 </div>
