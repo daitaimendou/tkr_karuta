@@ -1,8 +1,7 @@
 <template>
-    <div class="question">
+    <div class="question text-center">
         <YoutubePlayer ref="youtube_player" :video_id="video_id" class="d-none"/>
-        <button class="btn btn-primary" @click="playVideo">play</button>
-        <button class="btn btn-primary" @click="stopVideo">stop</button>
+        <button class="btn btn-primary" @click="playVideo"><font-awesome-icon :icon="['fas', 'play']"/> 問題を再生</button>
     </div>
 </template>
 

@@ -1,22 +1,32 @@
 <template>
-  <div class="quiz">
+  <div class="quiz m-2">
     <div class="container">
         <Question :video_id="anser_video_id"/>
-        <button class="btn btn-primary" v-on:click="get_question">プレイリストを取得</button>
-        <div class="row">
-            <div v-for="(value, key) in this.choice_videos" :key="key" class="col col-lg-4 col-sm-6 col-12 p-1">
-                <ChoiceCard @answer="check_anser(value['videoId'])" :title="value['title']" :image_url="value['image_url']"/>
+        <div class="m-1">
+            <div class="text-center text-secondary">正解を選んでください</div>
+            <div class="row">
+                <div v-for="(value, key) in this.choice_videos" :key="key" class="col col-lg-4 col-sm-6 col-12 p-1">
+                    <ChoiceCard @answer="check_anser(value['videoId'])" :title="value['title']" :image_url="value['image_url']"/>
+                </div>
             </div>
         </div>
         <div v-if="is_display_modal">
             <div class="modal" style="display: block;" >
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">タイトルタイトル</h4>
-                        </div>
                         <div class="modal-body">
-                            <YoutubePlayer :video_id="this.choice_videos[0]['videoId']"/>
+                            <div class="text-center mb-1">
+                                <div class="text-danger" v-if="is_correct_answer">
+                                    <font-awesome-icon :icon="['far', 'circle']" size="5x"/><br>
+                                    正解！
+                                </div>
+                                <div v-else class="text-info">
+                                    <font-awesome-icon :icon="['fas', 'times']" size="5x"/><br>
+                                    不正解
+                                </div>
+                            </div>
+                            正解は...
+                            <YoutubePlayer :video_id="anser_video_id"/>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" v-on:click.self="is_display_modal=false">閉じる</button>
@@ -48,7 +58,8 @@ export default {
           choice_videos: '',
           anser_video_id: '',
           hoge: 'yaho',
-          is_display_modal: false
+          is_display_modal: false,
+          is_correct_answer: false,
       }
     },
     created() {
@@ -89,9 +100,15 @@ export default {
         get_answer_video_id: function() {
             this.anser_video_id = this.choice_videos[this.choose_at_random_index(this.choice_videos)]['videoId'];
         },
-        check_anser: function(video_id){
-            console.log(video_id)
+        check_anser: function(choice_video_id){
+            console.log(choice_video_id)
             this.is_display_modal = true
+
+            if (choice_video_id == this.anser_video_id) {
+                this.is_correct_answer = true
+            } else {
+                this.is_correct_answer = false
+            }
         },
         choose_at_random_list: function(arrayData, count) {
             // countが設定されていない場合は1にする
