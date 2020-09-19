@@ -1,0 +1,26 @@
+@import url(http://fonts.googleapis.com/earlyaccess/notosansjapanese.css);
+
+div {
+    .btn-primary,
+    .btn-primary.disabled, .btn-primary:disabled {
+        background: #B10824;
+        border-color: #B10824;
+    }
+    .btn-primary:focus, .btn-primary.focus,
+    .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
+    .show > .btn-primary.dropdown-toggle:focus,
+    .btn-primary:hover,
+    .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+    .show > .btn-primary.dropdown-toggle {
+        background: #80061a;
+        border-color: #80061a;
+    }
+    .text-times {
+        color: #45A1CF;
+    }
+    color: #060606;
+    font-family: 'Noto Sans Japanese', sans-serif;
+}
+
+@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap-vue/src";

@@ -25,7 +25,7 @@
                                     <font-awesome-icon :icon="['far', 'circle']" size="5x"/><br>
                                     正解！
                                 </div>
-                                <div v-else class="text-info">
+                                <div v-else class="text-times">
                                     <font-awesome-icon :icon="['fas', 'times']" size="5x"/><br>
                                     不正解
                                 </div>
