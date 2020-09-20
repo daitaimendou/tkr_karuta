@@ -11,8 +11,6 @@ export default {
     props: [
         'video_id',
     ],
-    // data() {
-    // },
     methods: {
         playVideo: function() {
             this.player.playVideo()

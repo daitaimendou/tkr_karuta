@@ -6,8 +6,11 @@
             問題がうまく再生されない場合は数秒待って再度再生してください。<br>
             <small>※このクイズはファン作品です。公式とは一切関係ありません。</small><br>
         </div>
-        <div class="text-center"><font size="7">{{now_quiz_num}}</font><font size="5">/{{MAX_QUIZ_NUM}}問目</font></div>
-        <Question ref="question_player" :video_id="anser_video_id"/>
+        <div class="text-center">
+            <font size="7">{{now_quiz_num - 1}}</font>
+            <font size="5">/{{MAX_QUIZ_NUM - 1}}問目</font>
+        </div>
+        <Question ref="question_player" :video_id="answer_video_id"/>
         <div class="m-1 py-3">
             <div class="text-center text-secondary">正解を選択してください</div>
             <div class="row">
@@ -32,7 +35,7 @@
                                 </div>
                             </div>
                             正解は...
-                            <YoutubePlayer ref="correct_answer_player" :video_id="anser_video_id" v-on:changeIsPlaying="change_correct_answer_playing"/>
+                            <YoutubePlayer ref="correct_answer_player" :video_id="answer_video_id" v-on:changeIsPlaying="change_correct_answer_playing"/>
                             <div v-if="!is_correct_answer" class="mt-1">
                                 <hr>
                                 あなたの回答
@@ -54,7 +57,7 @@
                     <div class="modal-content">
                         <div class="modal-body text-center my-4">
                             <div>
-                                <div class="my-3"><font size="5">{{MAX_QUIZ_NUM}}問中{{correct_answer_num}}問正解！</font><br></div>
+                                <div class="my-3"><font size="5">{{MAX_QUIZ_NUM - 1}}問中{{correct_answer_num}}問正解！</font><br></div>
                                 <button @click="twitter_share" class="btn btn-twitter btn-sm"><small><font-awesome-icon :icon="['fab', 'twitter']" class="mr-1"/>結果をツイート</small></button>
                             </div>
                         </div>
@@ -84,10 +87,10 @@ export default {
     },
     data() {
       return {
-          MAX_QUIZ_NUM: 10,
+          MAX_QUIZ_NUM: 11,
           all_videos: all_videos.concat(),
           choice_videos: '',
-          anser_video_id: '',
+          answer_video_id: '',
           choice_video_id: '',
           correct_answer_num: 0,
           now_quiz_num: 0,
@@ -103,7 +106,8 @@ export default {
         set_start: function() {
             this.is_display_result_modal = false;
             this.correct_answer_num = 0;
-            this.now_quiz_num = 0;
+            // TODO:二問目だけ問題用の動画が変わらないバグの一時対応のため開始を1に変更
+            this.now_quiz_num = 1;
             this.all_videos = all_videos.concat();
             this.get_question();
         },
@@ -118,14 +122,15 @@ export default {
             this.choice_videos = this.choose_at_random_list(this.all_videos, 6)
         },
         get_answer_video_id: function() {
-            this.anser_video_id = this.choice_videos[this.choose_at_random_index(this.choice_videos)]['videoId'];
+            this.answer_video_id = "";
+            this.answer_video_id = this.choice_videos[this.choose_at_random_index(this.choice_videos)]['videoId'];
         },
         check_anser: function(choice_video_id){
             this.$refs.question_player.stopVideo();
             this.is_display_answer_modal = true
             this.choice_video_id = choice_video_id
 
-            if (choice_video_id == this.anser_video_id) {
+            if (choice_video_id == this.answer_video_id) {
                 this.is_correct_answer = true
                 this.correct_answer_num += 1
             } else {
@@ -145,7 +150,7 @@ export default {
             this.$refs.question_player.stopVideo();
         },
         twitter_share: function(){
-            var text = "匿名ラジオイントロクイズに" + this.MAX_QUIZ_NUM + "問中" + this.correct_answer_num + "問正解しました！"
+            var text = "匿名ラジオイントロクイズに" + (this.MAX_QUIZ_NUM - 1) + "問中" + this.correct_answer_num + "問正解しました！"
             var url = "https://daitaimendou.github.io/tkr_karuta"
             var share_url = 'https://twitter.com/intent/tweet?text=' + text + '&url=' + url;
             window.open(share_url, "_blank");
