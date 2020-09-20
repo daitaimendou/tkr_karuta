@@ -1,7 +1,8 @@
 <template>
     <div class="question text-center my-3">
         <YoutubePlayer ref="youtube_player" :video_id="video_id" class="d-none"/>
-        <button class="btn btn-primary" @click="playVideo"><font-awesome-icon :icon="['fas', 'play']"/> 問題を再生</button>
+        <button v-if="is_playing" class="btn btn-primary" @click="stopVideo"><font-awesome-icon :icon="['fas', 'stop']"/> 問題を停止</button>
+        <button v-else class="btn btn-primary" @click="playVideo"><font-awesome-icon :icon="['fas', 'play']"/> 問題を再生</button>
     </div>
 </template>
 
@@ -13,14 +14,20 @@ export default {
         YoutubePlayer,
     },
     props: ['video_id'],
+    data() {
+        return {
+            is_playing: false,
+        }
+    },
     methods: {
         playVideo: function() {
             this.$refs.youtube_player.stopVideo();
             this.$refs.youtube_player.playVideo();
-            setTimeout(this.$refs.youtube_player.stopVideo, 15000);
+            setTimeout(this.stopVideo, 15000);
         },
         stopVideo: function() {
             this.$refs.youtube_player.stopVideo();
+            this.is_playing = false;
         },
     },
 }
