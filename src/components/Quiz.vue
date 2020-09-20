@@ -1,14 +1,14 @@
 <template>
   <div class="quiz m-2">
     <div class="container">
-        <div v-if="now_quiz_num == 1" class="text-center p-3 bg-light mx-lg-5">
+        <div v-if="is_first" class="text-center p-3 bg-light mx-lg-5">
             匿名ラジオの冒頭15秒を聞いてどの回かを当てるクイズ<br>
             問題がうまく再生されない場合は数秒待って再度再生してください。<br>
             <small>※このクイズはファン作品です。公式とは一切関係ありません。</small><br>
         </div>
         <div class="text-center">
-            <font size="7">{{now_quiz_num - 1}}</font>
-            <font size="5">/{{MAX_QUIZ_NUM - 1}}問目</font>
+            <font size="7">{{now_quiz_num}}</font>
+            <font size="5">/{{MAX_QUIZ_NUM}}問目</font>
         </div>
         <Question ref="question_player" :video_id="answer_video_id"/>
         <div class="m-1 py-3">
@@ -57,7 +57,7 @@
                     <div class="modal-content">
                         <div class="modal-body text-center my-4">
                             <div>
-                                <div class="my-3"><font size="5">{{MAX_QUIZ_NUM - 1}}問中{{correct_answer_num}}問正解！</font><br></div>
+                                <div class="my-3"><font size="5">{{MAX_QUIZ_NUM}}問中{{correct_answer_num}}問正解！</font><br></div>
                                 <button @click="twitter_share" class="btn btn-twitter btn-sm"><small><font-awesome-icon :icon="['fab', 'twitter']" class="mr-1"/>結果をツイート</small></button>
                             </div>
                         </div>
@@ -87,7 +87,7 @@ export default {
     },
     data() {
       return {
-          MAX_QUIZ_NUM: 11,
+          MAX_QUIZ_NUM: 10,
           all_videos: all_videos.concat(),
           choice_videos: '',
           answer_video_id: '',
@@ -97,6 +97,7 @@ export default {
           is_display_answer_modal: false,
           is_display_result_modal: false,
           is_correct_answer: false,
+          is_first: true,
       }
     },
     created() {
@@ -106,8 +107,8 @@ export default {
         set_start: function() {
             this.is_display_result_modal = false;
             this.correct_answer_num = 0;
-            // TODO:二問目だけ問題用の動画が変わらないバグの一時対応のため開始を1に変更
-            this.now_quiz_num = 1;
+            this.now_quiz_num = 0;
+            this.is_first = true;
             this.all_videos = all_videos.concat();
             this.get_question();
         },
@@ -126,6 +127,7 @@ export default {
             this.answer_video_id = this.choice_videos[this.choose_at_random_index(this.choice_videos)]['videoId'];
         },
         check_anser: function(choice_video_id){
+            this.is_first = false;
             this.$refs.question_player.stopVideo();
             this.is_display_answer_modal = true
             this.choice_video_id = choice_video_id
@@ -150,7 +152,7 @@ export default {
             this.$refs.question_player.stopVideo();
         },
         twitter_share: function(){
-            var text = "匿名ラジオイントロクイズに" + (this.MAX_QUIZ_NUM - 1) + "問中" + this.correct_answer_num + "問正解しました！"
+            var text = "匿名ラジオイントロクイズに" + (this.MAX_QUIZ_NUM) + "問中" + this.correct_answer_num + "問正解しました！"
             var url = "https://daitaimendou.github.io/tkr_karuta"
             var share_url = 'https://twitter.com/intent/tweet?text=' + text + '&url=' + url;
             window.open(share_url, "_blank");
