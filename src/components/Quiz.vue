@@ -1,7 +1,7 @@
 <template>
   <div class="quiz m-2">
     <div class="container">
-        <div v-if="now_quiz_num == 2" class="text-center p-3 bg-light mx-lg-5">
+        <div v-if="is_first" class="text-center p-3 bg-light mx-lg-5">
             匿名ラジオの冒頭15秒を聞いてどの回かを当てるクイズ<br>
             問題がうまく再生されない場合は数秒待って再度再生してください。<br>
             <small>※このクイズはファン作品です。公式とは一切関係ありません。</small><br>
@@ -97,6 +97,7 @@ export default {
           is_display_answer_modal: false,
           is_display_result_modal: false,
           is_correct_answer: false,
+          is_first: true,
       }
     },
     created() {
@@ -108,6 +109,7 @@ export default {
             this.correct_answer_num = 0;
             // TODO:二問目だけ問題用の動画が変わらないバグの一時対応のため開始を1に変更
             this.now_quiz_num = 1;
+            this.is_first = true;
             this.all_videos = all_videos.concat();
             this.get_question();
         },
@@ -126,6 +128,7 @@ export default {
             this.answer_video_id = this.choice_videos[this.choose_at_random_index(this.choice_videos)]['videoId'];
         },
         check_anser: function(choice_video_id){
+            this.is_first = false;
             this.$refs.question_player.stopVideo();
             this.is_display_answer_modal = true
             this.choice_video_id = choice_video_id
