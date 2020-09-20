@@ -29,7 +29,6 @@ export default {
         stopVideo: function() {
             this.$refs.youtube_player.stopVideo();
             this.is_playing = false;
-            console.log(this.is_playing);
         },
         changeIsPlaying: function() {
             this.is_playing = true;
