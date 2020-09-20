@@ -23,11 +23,13 @@ export default {
         playVideo: function() {
             this.$refs.youtube_player.stopVideo();
             this.$refs.youtube_player.playVideo();
+            this.is_playing = true;
             setTimeout(this.stopVideo, 15000);
         },
         stopVideo: function() {
             this.$refs.youtube_player.stopVideo();
             this.is_playing = false;
+            console.log(this.is_playing);
         },
         changeIsPlaying: function() {
             this.is_playing = true;
