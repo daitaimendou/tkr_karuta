@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="youtube_player embed-responsive embed-responsive-16by9">
-            <youtube :video-id="video_id" ref="youtube" class="embed-responsive-item"/>
+            <youtube :video-id="video_id" ref="youtube" @playing="playing" class="embed-responsive-item"/>
         </div>
     </div>
 </template>
@@ -20,11 +20,17 @@ export default {
         stopVideo: function() {
             this.player.stopVideo()
         },
+        pauseVideo: function() {
+            this.player.pauseVideo()
+        },
+        playing: function() {
+            this.$emit('changeIsPlaying');
+        }
     },
     computed: {
         player() {
             return this.$refs.youtube.player
-        }
+        },
     }
 }
 </script>
