@@ -3,8 +3,8 @@
     <div class="container">
         <div v-if="now_quiz_num == 1" class="text-center p-3 bg-light mx-lg-5">
             匿名ラジオの冒頭15秒を聞いてどの回かを当てるクイズ<br>
+            問題がうまく再生されない場合は数秒待って再度再生してください。<br>
             <small>※このクイズはファン作品です。公式とは一切関係ありません。</small><br>
-            <small>制作者 <a href="https://twitter.com/daitaimendou">@daitaimendou</a></small>
         </div>
         <div class="text-center"><font size="7">{{now_quiz_num}}</font><font size="5">/{{MAX_QUIZ_NUM}}問目</font></div>
         <Question ref="question_player" :video_id="anser_video_id"/>
@@ -109,10 +109,10 @@ export default {
         },
         get_question: function() {
             window.scrollTo({top: 0});
-            this.is_display_answer_modal = false;
             this.now_quiz_num += 1;
             this.get_random_playlist()
             this.get_answer_video_id()
+            this.is_display_answer_modal = false;
         },
         get_random_playlist: function () {
             this.choice_videos = this.choose_at_random_list(this.all_videos, 6)
@@ -121,6 +121,7 @@ export default {
             this.anser_video_id = this.choice_videos[this.choose_at_random_index(this.choice_videos)]['videoId'];
         },
         check_anser: function(choice_video_id){
+            this.$refs.question_player.stopVideo();
             this.is_display_answer_modal = true
             this.choice_video_id = choice_video_id
 

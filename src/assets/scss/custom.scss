@@ -1,5 +1,10 @@
 @import url(http://fonts.googleapis.com/earlyaccess/notosansjapanese.css);
 
+* {
+    margin: 0;
+    padding: 0;
+}
+
 div {
     .btn-primary,
     .btn-primary.disabled, .btn-primary:disabled {
@@ -32,9 +37,10 @@ div {
     h1 {
         font-size: 20px;
     }
-    a {
-        color: #B10824
-    }
+}
+
+.bg-red {
+    background-color: #B10824;
 }
 
 @import "~bootstrap/scss/bootstrap";
