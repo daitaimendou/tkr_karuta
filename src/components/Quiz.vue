@@ -7,7 +7,7 @@
             <small>制作者 <a href="https://twitter.com/daitaimendou">@daitaimendou</a></small>
         </div>
         <div class="text-center"><font size="7">{{now_quiz_num}}</font><font size="5">/{{MAX_QUIZ_NUM}}問目</font></div>
-        <Question :video_id="anser_video_id"/>
+        <Question ref="question_player" :video_id="anser_video_id"/>
         <div class="m-1 py-3">
             <div class="text-center text-secondary">正解を選択してください</div>
             <div class="row">
@@ -32,11 +32,11 @@
                                 </div>
                             </div>
                             正解は...
-                            <YoutubePlayer :video_id="anser_video_id"/>
+                            <YoutubePlayer ref="correct_answer_player" :video_id="anser_video_id" v-on:changeIsPlaying="change_correct_answer_playing"/>
                             <div v-if="!is_correct_answer" class="mt-1">
                                 <hr>
                                 あなたの回答
-                                <YoutubePlayer :video_id="choice_video_id"/>
+                                <YoutubePlayer ref="choice_answer_player" :video_id="choice_video_id" v-on:changeIsPlaying="change_choice_answer_playing"/>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -55,7 +55,7 @@
                         <div class="modal-body text-center my-4">
                             <div>
                                 <div class="my-3"><font size="5">{{MAX_QUIZ_NUM}}問中{{correct_answer_num}}問正解！</font><br></div>
-                                <button @click="twitter_share" class="btn btn-twitter btn-sm"><small><font-awesome-icon :icon="['fab', 'twitter']" class="mr-1"/>結果をツイート</small></button>
+                                <!-- 結果をシェアする -->
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -135,11 +135,14 @@ export default {
             this.is_display_answer_modal = false
             this.is_display_result_modal = true
         },
-        twitter_share(){
-            var text = "匿名ラジオイントロクイズに" + this.MAX_QUIZ_NUM + "問中" + this.correct_answer_num + "問正解しました！"
-            var url = "https://daitaimendou.github.io/tkr_karuta"
-            var share_url = 'https://twitter.com/intent/tweet?text=' + text + '&url=' + url;
-            window.open(share_url, "_blank");
+        change_correct_answer_playing: function() {
+            this.$refs.choice_answer_player.pauseVideo();
+            this.$refs.question_player.stopVideo();
+        },
+        change_choice_answer_playing: function() {
+            this.$refs.correct_answer_player.pauseVideo();
+            this.$refs.question_player.stopVideo();
+
         },
         choose_at_random_list: function(arrayData, count) {
             // countが設定されていない場合は1にする

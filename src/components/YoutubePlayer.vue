@@ -20,9 +20,12 @@ export default {
         stopVideo: function() {
             this.player.stopVideo()
         },
-        playing: function() {
-            this.$parent.is_playing = true;
+        pauseVideo: function() {
+            this.player.pauseVideo()
         },
+        playing: function() {
+            this.$emit('changeIsPlaying');
+        }
     },
     computed: {
         player() {
