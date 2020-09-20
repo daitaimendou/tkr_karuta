@@ -142,7 +142,6 @@ export default {
         change_choice_answer_playing: function() {
             this.$refs.correct_answer_player.pauseVideo();
             this.$refs.question_player.stopVideo();
-
         },
         twitter_share: function(){
             var text = "匿名ラジオイントロクイズに" + this.MAX_QUIZ_NUM + "問中" + this.correct_answer_num + "問正解しました！"
