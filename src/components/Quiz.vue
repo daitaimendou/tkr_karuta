@@ -1,7 +1,7 @@
 <template>
   <div class="quiz m-2">
     <div class="container">
-        <div v-if="now_quiz_num == 1" class="text-center p-3 bg-light mx-lg-5">
+        <div v-if="now_quiz_num == 2" class="text-center p-3 bg-light mx-lg-5">
             匿名ラジオの冒頭15秒を聞いてどの回かを当てるクイズ<br>
             問題がうまく再生されない場合は数秒待って再度再生してください。<br>
             <small>※このクイズはファン作品です。公式とは一切関係ありません。</small><br>
