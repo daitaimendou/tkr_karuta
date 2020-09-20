@@ -7,7 +7,7 @@
             <small>※このクイズはファン作品です。公式とは一切関係ありません。</small><br>
         </div>
         <div class="text-center"><font size="7">{{now_quiz_num}}</font><font size="5">/{{MAX_QUIZ_NUM}}問目</font></div>
-        <Question ref="question_player" :video_id="anser_video_id"/>
+        <Question ref="question_player" :video_id="answer_video_id"/>
         <div class="m-1 py-3">
             <div class="text-center text-secondary">正解を選択してください</div>
             <div class="row">
@@ -32,7 +32,7 @@
                                 </div>
                             </div>
                             正解は...
-                            <YoutubePlayer ref="correct_answer_player" :video_id="anser_video_id" v-on:changeIsPlaying="change_correct_answer_playing"/>
+                            <YoutubePlayer ref="correct_answer_player" :video_id="answer_video_id" v-on:changeIsPlaying="change_correct_answer_playing"/>
                             <div v-if="!is_correct_answer" class="mt-1">
                                 <hr>
                                 あなたの回答
@@ -87,7 +87,7 @@ export default {
           MAX_QUIZ_NUM: 10,
           all_videos: all_videos.concat(),
           choice_videos: '',
-          anser_video_id: '',
+          answer_video_id: '',
           choice_video_id: '',
           correct_answer_num: 0,
           now_quiz_num: 0,
@@ -113,19 +113,22 @@ export default {
             this.get_random_playlist()
             this.get_answer_video_id()
             this.is_display_answer_modal = false;
+            console.log("now_quiz_num:" + this.now_quiz_num);
+            console.log("answer_video_id:" + this.answer_video_id)
         },
         get_random_playlist: function () {
             this.choice_videos = this.choose_at_random_list(this.all_videos, 6)
         },
         get_answer_video_id: function() {
-            this.anser_video_id = this.choice_videos[this.choose_at_random_index(this.choice_videos)]['videoId'];
+            this.answer_video_id = "";
+            this.answer_video_id = this.choice_videos[this.choose_at_random_index(this.choice_videos)]['videoId'];
         },
         check_anser: function(choice_video_id){
             this.$refs.question_player.stopVideo();
             this.is_display_answer_modal = true
             this.choice_video_id = choice_video_id
 
-            if (choice_video_id == this.anser_video_id) {
+            if (choice_video_id == this.answer_video_id) {
                 this.is_correct_answer = true
                 this.correct_answer_num += 1
             } else {

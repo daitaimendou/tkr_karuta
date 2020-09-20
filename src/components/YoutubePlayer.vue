@@ -11,10 +11,9 @@ export default {
     props: [
         'video_id',
     ],
-    // data() {
-    // },
     methods: {
         playVideo: function() {
+            console.log("playvideoid:" + this.video_id)
             this.player.playVideo()
         },
         stopVideo: function() {
