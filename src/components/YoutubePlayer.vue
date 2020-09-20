@@ -13,7 +13,6 @@ export default {
     ],
     methods: {
         playVideo: function() {
-            console.log("playvideoid:" + this.video_id)
             this.player.playVideo()
         },
         stopVideo: function() {
