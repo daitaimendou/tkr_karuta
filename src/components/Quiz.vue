@@ -4,7 +4,6 @@
         <div v-if="now_quiz_num == 1" class="text-center p-3 bg-light mx-lg-5">
             匿名ラジオの冒頭15秒を聞いてどの回かを当てるクイズ<br>
             <small>※このクイズはファン作品です。公式とは一切関係ありません。</small><br>
-            <small>制作者 <a href="https://twitter.com/daitaimendou">@daitaimendou</a></small>
         </div>
         <div class="text-center"><font size="7">{{now_quiz_num}}</font><font size="5">/{{MAX_QUIZ_NUM}}問目</font></div>
         <Question ref="question_player" :video_id="anser_video_id"/>
