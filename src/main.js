@@ -6,10 +6,11 @@ import './assets/scss/custom.scss'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTimes, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
+import { faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VueYoutube from 'vue-youtube'
 
-library.add(faCircle, faTimes, faPlay)
+library.add(faCircle, faTimes, faPlay, faTwitter)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(BootstrapVue)

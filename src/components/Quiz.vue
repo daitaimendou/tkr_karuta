@@ -55,7 +55,7 @@
                         <div class="modal-body text-center my-4">
                             <div>
                                 <div class="my-3"><font size="5">{{MAX_QUIZ_NUM}}問中{{correct_answer_num}}問正解！</font><br></div>
-                                <!-- 結果をシェアする -->
+                                <button @click="twitterShare" class="btn btn-twitter btn-sm"><small><font-awesome-icon :icon="['fab', 'twitter']" class="mr-1"/>結果をツイート</small></button>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -134,6 +134,12 @@ export default {
         show_result: function() {
             this.is_display_answer_modal = false
             this.is_display_result_modal = true
+        },
+        twitterShare(){
+            var text = "匿名ラジオイントロクイズに" + this.MAX_QUIZ_NUM + "問中" + this.correct_answer_num + "問正解しました！"
+            var url = "https://daitaimendou.github.io/tkr_karuta"
+            var share_url = 'https://twitter.com/intent/tweet?text=' + text + '&url=' + url;
+            window.open(share_url, "_blank");
         },
         choose_at_random_list: function(arrayData, count) {
             // countが設定されていない場合は1にする
