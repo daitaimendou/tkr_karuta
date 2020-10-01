@@ -3,7 +3,7 @@
     <div class="container">
         <div v-if="is_first" class="text-center p-3 bg-light mx-lg-5">
             匿名ラジオの冒頭15秒を聞いてどの回かを当てるクイズ<br>
-            問題がうまく再生されない場合は数秒待って再度再生してください。<br>
+            ※現在iOS端末で問題再生ができない状況です。(iOS対応は未定です)<br>
             <small>※このクイズはファン作品です。公式とは一切関係ありません。</small><br>
         </div>
         <div class="text-center">
